@@ -4,23 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
 using System.ServiceProcess;
 
-namespace testWorkerService
+namespace WorkerDbServiceWHealth
 {
 	public class Program
 	{
-		//https://app.pluralsight.com/library/courses/building-aspnet-core-hosted-services-net-core-worker-services/
-		//using System.ServiceProcess
+		//Widely taken from/inspired by https://app.pluralsight.com/library/courses/building-aspnet-core-hosted-services-net-core-worker-services/
+
 		public static void Main(string[] args)
 		{
+			//for auto installing? No, can just start/stop etc... no installation possible...
 			//ServiceController ctrl = new ServiceController()
-			//for auto installing
 
 			CreateHostBuilder(args).Build().Run();
 		}
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
+
 			Host.CreateDefaultBuilder(args)
 				//Windows service declaration that will (only if it runs in windows service mode)):
 				//- configures the host to use a WindowsServiceLifetime
@@ -40,6 +42,10 @@ namespace testWorkerService
 					services.AddHostedService<Worker2>();
 					//BUT: When gracefully stopped, will be stopped in the other way round (Worker2 stopped before Worker1)
 
+				})
+				.ConfigureWebHostDefaults(webBuilder =>
+				{
+					webBuilder.UseStartup<Startup>();
 				});
 	}
 }

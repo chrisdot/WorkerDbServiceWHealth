@@ -1,7 +1,9 @@
-﻿{
+{
   "profiles": {
     "testWorkerService": {
       "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "healthui",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }

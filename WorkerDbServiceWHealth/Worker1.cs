@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.WindowsServices;
 using Microsoft.Extensions.Logging;
 
-namespace testWorkerService
+namespace WorkerDbServiceWHealth
 {
 	public class Worker1 : BackgroundService
 	{
