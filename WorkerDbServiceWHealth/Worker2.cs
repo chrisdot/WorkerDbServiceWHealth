@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.WindowsServices;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
@@ -21,7 +22,7 @@ namespace WorkerDbServiceWHealth
 		{
 			while (!stoppingToken.IsCancellationRequested)
 			{
-				_logger.LogInformation("Worker2 running at: {time}", DateTimeOffset.Now);
+				_logger.LogInformation("Worker2 (IsWindowsService={isWindowsService}) running at: {time}", WindowsServiceHelpers.IsWindowsService(), DateTimeOffset.Now);
 				await Task.Delay(1000, stoppingToken);
 			}
 		}

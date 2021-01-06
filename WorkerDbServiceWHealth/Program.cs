@@ -12,6 +12,9 @@ namespace WorkerDbServiceWHealth
 	public class Program
 	{
 		//Widely taken from/inspired by https://app.pluralsight.com/library/courses/building-aspnet-core-hosted-services-net-core-worker-services/
+		//and also its equivalence in MSFT docs: https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-5.0
+
+		//TODO: looking for a way to auto-install the current service as in TopShelf (see: https://github.com/Topshelf/Topshelf/blob/develop/src/Topshelf/Runtime/DotNetCore/DotNetCoreHostEnvironment.cs#L159)
 
 		public static void Main(string[] args)
 		{

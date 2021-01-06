@@ -30,6 +30,7 @@ namespace WorkerDbServiceWHealth
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			//sql server connection string to be tested
 			string connectionString = Configuration["WorkerDbServiceWHealth:ConnectionString"];
 
 			services.AddControllers();
@@ -48,6 +49,19 @@ namespace WorkerDbServiceWHealth
 				//.AddCheck(...)
 
 				;
+
+			services.Configure<HealthCheckPublisherOptions>(opts => {
+				//inital delay before doing first healthCheck test
+				opts.Delay = TimeSpan.FromSeconds(5);
+				//then make the test every 10s
+				opts.Period = TimeSpan.FromSeconds(10);
+				//add a predicate if we want to filter eg by tag)
+				//opts.Predicate = 
+				//timeout for the duration of the health check: if it does timeout it will report a unhealthy status
+				opts.Timeout = TimeSpan.FromSeconds(20);
+			});
+
+			services.AddSingleton<IHealthCheckPublisher, MyHealthCheckPublisher>();
 
 			//or adding it via lambda
 			//.AddCheck("SQl check", () =>
@@ -77,7 +91,7 @@ namespace WorkerDbServiceWHealth
 				setup.MaximumHistoryEntriesPerEndpoint(50);
 
 				setup.AddHealthCheckEndpoint("CurrentNodeHealth", "/healthforui");
-			}).AddInMemoryStorage(); //TODO: see maximum size in memory?
+			}).AddInMemoryStorage(); //TODO: see maximum size in memory? See for cleanup?
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

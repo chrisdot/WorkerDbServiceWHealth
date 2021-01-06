@@ -64,7 +64,7 @@ namespace WorkerDbServiceWHealth
 			{
 				while (!stoppingToken.IsCancellationRequested)
 				{
-					_logger.LogInformation("Worker1 running at: {time}", DateTimeOffset.Now);
+					_logger.LogInformation("Worker1 (IsWindowsService={isWindowsService}) running at: {time}", WindowsServiceHelpers.IsWindowsService(), DateTimeOffset.Now);
 					await Task.Delay(1000, stoppingToken);
 				}
 				Console.WriteLine("Exit main worker loop");
